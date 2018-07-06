@@ -2,7 +2,6 @@ vendor/
 **/*.log
 **/*.sqlite
 .idea/
-bin/
 tmp/
 node_modules/
 .sass-cache/
@@ -12,3 +11,4 @@ tic_tac_toe
 .vscode/
 .grifter/
 yarn.lock
+Gopkg.lock
