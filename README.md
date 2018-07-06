@@ -18,4 +18,6 @@ I had prepared pre-built binary for mac & linux Edition (x86 64bit).
 cd build/linux/
 ./tic_tac_toe
 ```
+open [http://localhost:3000](http://localhost:3000) on your brower.
+
 Otherwise you can follow [installation.md](./installation.md) to build this web application your self.
