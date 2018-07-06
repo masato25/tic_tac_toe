@@ -1,3 +1,32 @@
 @import "~bootstrap-sass/assets/stylesheets/_bootstrap-sprockets.scss";
 @import "~bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 @import "~font-awesome/css/font-awesome.css";
+@import "~font-awesome/css/font-awesome.css";
+@import '~element-ui/lib/theme-chalk/index.css';
+
+#container-body {
+  position: relative;
+  top: 40px;
+}
+
+/* theme color */
+$--color-primary: teal !default;
+
+/* icon font path, required */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+$--color-success: #67c23a !default;
+$--color-warning: #e6a23c !default;
+$--color-danger: #f56c6c !default;
+$--color-info: #909399 !default;
+$--table-header-color: red;
+
+
+.row_container{
+  positions: relative;
+  top: 1.5em;
+}
+
+#right-menu-item{
+  float: right;
+}

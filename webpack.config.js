@@ -5,6 +5,9 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var ManifestPlugin = require("webpack-manifest-plugin");
 var PROD = process.env.NODE_ENV || "development";
 var CleanWebpackPlugin = require("clean-webpack-plugin");
+var path = require('path');
+
+const vuePath = path.resolve(__dirname, 'app/vue')
 
 var entries = {
   application: [
@@ -13,22 +16,30 @@ var entries = {
   ],
 }
 
+var customEntries = {
+  //app: vuePath + "/index/app.js",
+  bundle: path.resolve(__dirname, 'app/main.js')
+}
+
 glob.sync("./assets/*/*.*").reduce((_, entry) => {
   let key = entry.replace(/(\.\/assets\/(js|css|go)\/)|\.(js|s[ac]ss|go)/g, '')
-  if(key.startsWith("_") || (/(js|s[ac]ss|go)$/i).test(entry) == false) {
+  if(key.startsWith("_") || (/(js|s[ac]ss|go)$/i).test(entry) === false) {
     return
   }
-  
-  if( entries[key] == null) {
+
+  if( entries[key] === null) {
     entries[key] = [entry]
     return
-  } 
-  
+  }
+
   entries[key].push(entry)
 })
 
 module.exports = {
-  entry: entries,
+  entry: {
+    ...customEntries,
+    ...entries,
+  },
   output: {
     filename: "[name].[hash].js",
     path: `${__dirname}/public/assets`
@@ -62,11 +73,12 @@ module.exports = {
     })
   ],
   module: {
-    rules: [{
-      test: /\.jsx?$/,
-      loader: "babel-loader",
-      exclude: /node_modules/
-    },
+    rules: [
+      {
+        test: /\.jsx?$/,
+        loader: "babel-loader",
+        exclude: /node_modules/
+      },
       {
         test: /\.s[ac]ss$/,
         use: ExtractTextPlugin.extract({
@@ -86,6 +98,10 @@ module.exports = {
           ]
         })
       },
+      {
+        test: /\.css$/,
+        loaders: ['style-loader','css-loader']
+      },
       { test: /\.(woff|woff2|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/,use: "url-loader"},
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,use: "file-loader" },
       {
@@ -95,8 +111,33 @@ module.exports = {
       {
         test: /\.go$/,
         use: "gopherjs-loader"
+      },
+      {
+        test: /\.pug$/,
+        use: 'pug'
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif|svgz)(\?.+)?$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 10000
+          }
+        }]
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
       }
     ]
+  },
+  resolve: {
+    alias: {
+      vue: 'vue/dist/vue.js',
+      "~app": path.resolve(__dirname, "app"),
+      "~jbase": path.resolve(__dirname, "app/base"),
+      "~vuecom": path.resolve(__dirname, "app/vue"),
+    }
   }
 };
 

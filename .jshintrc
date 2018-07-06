@@ -1,0 +1,13 @@
+{
+  "ecmaVersion": 8,
+  "esversion": 6,
+  "boss":      true,
+  "node":      false,
+  "eqeqeq":    true,
+  "newcap":    false,
+  "undef":     true,
+  "unused":    true,
+  "onecase":   true,
+  "lastsemic": true,
+  "asi" : true
+}

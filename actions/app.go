@@ -22,6 +22,8 @@ var T *i18n.Translator
 // should be defined. This is the nerve center of your
 // application.
 func App() *buffalo.App {
+
+	envy.Set("SESSION_SECRET", "justfortestingsodisabledit")
 	if app == nil {
 		app = buffalo.New(buffalo.Options{
 			Env:         ENV,
@@ -46,9 +48,13 @@ func App() *buffalo.App {
 		if T, err = i18n.New(packr.NewBox("../locales"), "en-US"); err != nil {
 			app.Stop(err)
 		}
+
 		app.Use(T.Middleware())
 
 		app.GET("/", HomeHandler)
+
+		app.GET("/ui", HomeHandler)
+		app.GET("/ui/{path:.+}", HomeHandler)
 
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}

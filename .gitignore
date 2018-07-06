@@ -11,4 +11,4 @@ public/assets/
 tic_tac_toe
 .vscode/
 .grifter/
-.env
+yarn.lock
